@@ -1,6 +1,6 @@
 import axios from "axios";
 
-function MultiFileUpload() {
+function MultiFileUpload({ setLoading }) {
   const api = process.env.REACT_APP_UPLOAD_API;
   const handleChange = (e) => {
     const formData = new FormData();
@@ -8,11 +8,17 @@ function MultiFileUpload() {
     Array.from(files).forEach((file, index) => {
       formData.append(`files`, file);
     });
-    axios.post(`${api}/multiple`, formData, {
-      headers: {
-        "Content-Type": "multipart/form-data",
-      },
-    });
+    setLoading(true);
+    axios
+      .post(`${api}/multiple`, formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      })
+      .then((respose) => {
+        console.log(respose);
+        setLoading(false);
+      });
   };
 
   return (

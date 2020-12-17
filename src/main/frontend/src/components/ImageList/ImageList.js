@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useCallback, useEffect, useState } from "react";
 
-function ImageList() {
+function ImageList({ loading }) {
   const api = process.env.REACT_APP_UPLOAD_API;
   const [images, setImages] = useState([]);
 
@@ -13,7 +13,7 @@ function ImageList() {
 
   useEffect(() => {
     fetchImages();
-  }, [fetchImages]);
+  }, [fetchImages, loading]);
 
   return images.map((item) => (
     <div key={item.id}>

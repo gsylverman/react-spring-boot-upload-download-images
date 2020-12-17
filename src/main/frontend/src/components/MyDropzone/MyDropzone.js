@@ -2,13 +2,14 @@ import axios from "axios";
 import { useCallback } from "react";
 import { useDropzone } from "react-dropzone";
 
-function MyDropzone() {
+function MyDropzone({ setLoading }) {
   const api = process.env.REACT_APP_UPLOAD_API;
   const onDrop = useCallback(
     (files) => {
       console.log(files);
       const formData = new FormData();
       formData.append("file", files[0]);
+      setLoading(true);
       axios
         .post(api, formData, {
           headers: {
@@ -17,10 +18,11 @@ function MyDropzone() {
         })
         .then(() => {
           console.log("uploaded succesfully");
+          setLoading(false);
         })
         .catch((err) => console.log(err));
     },
-    [api]
+    [api, setLoading]
   );
   const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
 
