@@ -1,8 +1,8 @@
 import axios from "axios";
 
 function ImageItem({ name, fullName, url, setLoading }) {
+  const api = process.env.REACT_APP_UPLOAD_API;
   const deleteImage = () => {
-    const api = process.env.REACT_APP_UPLOAD_API;
     setLoading(true);
     axios
       .post(`${api}/deleteFile/${fullName}`)
@@ -12,6 +12,7 @@ function ImageItem({ name, fullName, url, setLoading }) {
       })
       .catch((err) => console.log(err));
   };
+  console.log(`${api}/image/${fullName}`);
 
   return (
     <>
@@ -24,6 +25,16 @@ function ImageItem({ name, fullName, url, setLoading }) {
         />
       </div>
       <button onClick={deleteImage}>Delete Image</button>
+      <span>
+        <a
+          href={`${api}/image/${fullName}`}
+          download={name}
+          target="_blank"
+          rel="noreferrer"
+        >
+          <button>Download: {name}</button>
+        </a>
+      </span>
     </>
   );
 }
