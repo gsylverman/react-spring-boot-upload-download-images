@@ -1,10 +1,8 @@
 package com.gavril.imageupload.controller;
 
 import com.gavril.imageupload.model.FileProps;
-import org.springframework.core.io.ClassPathResource;
-import org.springframework.core.io.InputStreamResource;
+import org.springframework.core.io.UrlResource;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -12,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.net.MalformedURLException;
 import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -77,14 +76,22 @@ public class MyController {
     }
 
     @GetMapping(path = "/api/image/{imgName}", produces = MediaType.IMAGE_JPEG_VALUE)
-    public ResponseEntity<InputStreamResource> getImage(@PathVariable("imgName") String imgName) throws IOException {
+    public UrlResource getImage(@PathVariable("imgName") String imgName) throws IOException {
+        Path pathToFile = Path.of("src/main/resources/images/" + imgName);
+        UrlResource resource = null;
+        try {
+            resource = new UrlResource(pathToFile.toUri());
+        } catch (MalformedURLException e) {
+            throw new RuntimeException(e);
+        }
+        return resource;
 
-        var imgFile = new ClassPathResource("images/" + imgName);
-
-        return ResponseEntity
-                .ok()
-                .contentType(MediaType.IMAGE_JPEG)
-                .body(new InputStreamResource(imgFile.getInputStream()));
+//        var imgFile = new ClassPathResource("images/" + imgName);
+//
+//        return ResponseEntity
+//                .ok()
+//                .contentType(MediaType.IMAGE_JPEG)
+//                .body(new InputStreamResource(imgFile.getInputStream()));
     }
 
     @PostMapping(path = "/deleteFiles")
