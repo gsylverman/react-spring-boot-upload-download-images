@@ -3,12 +3,22 @@ package com.gavril.imageupload.model;
 public class FileProps {
     private int id;
     private String name;
+    private String fullName;
     private String url;
 
-    public FileProps(int id, String name, String url) {
+    public FileProps(int id, String name, String fullName, String url) {
         this.id = id;
         this.name = name;
+        this.fullName = fullName;
         this.url = url;
+    }
+
+    public String getFullName() {
+        return fullName;
+    }
+
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
     }
 
     public int getId() {

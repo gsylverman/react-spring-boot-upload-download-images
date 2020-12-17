@@ -15,7 +15,7 @@ function App() {
       <hr />
       <Buttons setLoading={setLoading} />
       <hr />
-      <ImageList loading={loading} />
+      <ImageList loading={loading} setLoading={setLoading} />
       <hr />
       {loading}
     </div>

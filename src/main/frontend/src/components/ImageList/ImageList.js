@@ -1,7 +1,8 @@
 import axios from "axios";
 import { useCallback, useEffect, useState } from "react";
+import ImageItem from "./ImageItem/ImageItem";
 
-function ImageList({ loading }) {
+function ImageList({ loading, setLoading }) {
   const api = process.env.REACT_APP_UPLOAD_API;
   const [images, setImages] = useState([]);
 
@@ -16,16 +17,7 @@ function ImageList({ loading }) {
   }, [fetchImages, loading]);
 
   return images.map((item) => (
-    <div key={item.id}>
-      <div>Image name: {item.name}</div>
-      <div>
-        <img
-          src={item.url}
-          alt={item.name}
-          style={{ maxHeight: "200px", width: "auto" }}
-        />
-      </div>
-    </div>
+    <ImageItem key={item.id} {...item} setLoading={setLoading} />
   ));
 }
 

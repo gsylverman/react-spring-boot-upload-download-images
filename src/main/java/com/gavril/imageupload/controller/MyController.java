@@ -59,7 +59,7 @@ public class MyController {
     public List<FileProps> getFilesList(HttpServletRequest request) {
         List<FileProps> filesProps = new ArrayList<>();
         String baseURL = request.getHeader("host");
-        System.out.println("http://" + baseURL + "/");
+//        System.out.println("http://" + baseURL + "/");
 
         String[] pathNames;
         File f = new File("src/main/resources/images/");
@@ -70,7 +70,7 @@ public class MyController {
             filesProps.add(
                     new FileProps(i.getAndIncrement(),
                             item.substring(0, item.lastIndexOf('.')),
-                            "http://" + baseURL + "/upload/api/image/" + item));
+                            item, "http://" + baseURL + "/upload/api/image/" + item));
         });
         return filesProps;
     }
@@ -97,5 +97,11 @@ public class MyController {
             file.delete();
             System.out.print(fileName + "deleted");
         });
+    }
+
+    @PostMapping(path = "/api/deleteFile/{name}")
+    public void deleteImage(@PathVariable("name") String name) {
+        File image = new File("src/main/resources/images/" + name);
+        image.delete();
     }
 }
