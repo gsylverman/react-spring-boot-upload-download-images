@@ -85,16 +85,9 @@ public class MyController {
             throw new RuntimeException(e);
         }
         return resource;
-
-//        var imgFile = new ClassPathResource("images/" + imgName);
-//
-//        return ResponseEntity
-//                .ok()
-//                .contentType(MediaType.IMAGE_JPEG)
-//                .body(new InputStreamResource(imgFile.getInputStream()));
     }
 
-    @PostMapping(path = "/deleteFiles")
+    @PostMapping(path = "/api/deleteFiles")
     public void deleteImages() {
         String[] pathNames;
         File f = new File("src/main/resources/images/");
