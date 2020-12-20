@@ -75,7 +75,7 @@ public class MyController {
         return filesProps;
     }
 
-    @GetMapping(path = "/api/image/{imgName}", produces = MediaType.IMAGE_JPEG_VALUE)
+    @GetMapping(path = "/api/image/{imgName}", produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
     public UrlResource getImage(@PathVariable("imgName") String imgName) throws IOException {
         Path pathToFile = Path.of("src/main/resources/images/" + imgName);
         UrlResource resource = null;
